@@ -2,14 +2,21 @@
 package model.bean;
 
 import java.sql.Date;
-import java.time.LocalDateTime;
 
 
 public class Professores {
     
     private int id_professor, id_area;
-    private String nome, matricula, senha, cpf;
+    private String nome, matricula, senha, cpf, imagem;
     private Date admissao;
+
+    public String getImagem() {
+        return imagem;
+    }
+
+    public void setImagem(String imagem) {
+        this.imagem = imagem;
+    }
 
     public int getId_professor() {
         return id_professor;

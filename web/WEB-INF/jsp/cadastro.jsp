@@ -10,7 +10,7 @@
     <body>
         <h1>Criação da conta</h1>
         <br>
-        <form action="./cadastrar" method="post">
+        <form action="./cadastrar" method="post" enctype="multipart/form-data">
             <input type="text" name="inputNome" placeholder="Nome">
             <input type="password" name="inputSenha" placeholder="Senha">
             <input type="number" name="inputCpf" placeholder="Cpf">
@@ -21,6 +21,7 @@
                     <option value="${area.id_area}">${area.nome}</option>
                 </c:forEach>
             </select>
+            <input type="file" name="inputImagem">
             <button type="submit">Cadastrar</button>
         </form>
     </body>

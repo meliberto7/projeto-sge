@@ -19,7 +19,7 @@ public class ProfessoresDAO {
         try{
             
             Connection conexao = Conexao.conectar();
-            PreparedStatement stmt = conexao.prepareStatement("INSERT INTO professores(nome,matricula,admissao,senha,cpf,id_area) VALUES(?,?,?,?,?,?)");
+            PreparedStatement stmt = conexao.prepareStatement("INSERT INTO professores(nome,matricula,admissao,senha,cpf,id_area,imagem) VALUES(?,?,?,?,?,?,?)");
             
             stmt.setString(1, professor.getNome());
             
@@ -54,6 +54,7 @@ public class ProfessoresDAO {
             stmt.setString(4, professor.getSenha());
             stmt.setString(5, professor.getCpf());
             stmt.setInt(6, professor.getId_area());
+            stmt.setString(7, professor.getImagem());
             
             if (stmt.executeUpdate() > 0) {
                 
@@ -101,9 +102,9 @@ public class ProfessoresDAO {
         return very;
     }
     
-    public boolean logar(String cpf, String senha) {
+    public Professores logar(String cpf, String senha) {
         
-        boolean very = false;
+        Professores prof = new Professores();
         
         try{
             
@@ -117,7 +118,14 @@ public class ProfessoresDAO {
             
             if (rs.next()) {
                 
-                very = true;
+                prof.setId_professor(rs.getInt("id_professor"));
+                prof.setNome(rs.getString("nome"));
+                prof.setMatricula(rs.getString("matricula"));
+                prof.setAdmissao(rs.getDate("admissao"));
+                prof.setSenha(rs.getString("senha"));
+                prof.setCpf(rs.getString("cpf"));
+                prof.setId_area(rs.getInt("id_area"));
+                prof.setImagem(rs.getString("imagem"));
                 
             }
             
@@ -129,7 +137,7 @@ public class ProfessoresDAO {
             e.printStackTrace();
         }
         
-        return very;
+        return prof;
     }
     
 }

@@ -1,5 +1,3 @@
-CREATE DATABASE  IF NOT EXISTS `projeto_sge` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
-USE `projeto_sge`;
 -- MySQL dump 10.13  Distrib 5.6.23, for Win64 (x86_64)
 --
 -- Host: localhost    Database: projeto_sge
@@ -56,11 +54,12 @@ CREATE TABLE `professores` (
   `senha` varchar(45) NOT NULL,
   `cpf` varchar(11) NOT NULL,
   `id_area` int(11) NOT NULL,
+  `imagem` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_professor`),
   UNIQUE KEY `cpf` (`cpf`),
   KEY `id_area` (`id_area`),
   CONSTRAINT `professores_ibfk_1` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id_area`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +68,7 @@ CREATE TABLE `professores` (
 
 LOCK TABLES `professores` WRITE;
 /*!40000 ALTER TABLE `professores` DISABLE KEYS */;
-INSERT INTO `professores` VALUES (3,'Vini','5','2024-09-10','123','00000000000',4),(4,'LÃ©o','2','2024-09-24','122','11111111111',5),(5,'Junin','0','2024-09-16','000','908989',5),(6,'Izaque','1','2024-09-09','000','9090090',6),(7,'Juninho2','4','2024-10-06','66','9797979',5),(8,'Maria','3','2024-09-22','88','646464',2);
+INSERT INTO `professores` VALUES (3,'Vini','5','2024-09-10','123','00000000000',4,NULL),(4,'LÃ©o','2','2024-09-24','122','11111111111',5,NULL),(5,'Junin','0','2024-09-16','000','908989',5,NULL),(6,'Izaque','1','2024-09-09','000','9090090',6,NULL),(7,'Juninho2','4','2024-10-06','66','9797979',5,NULL),(8,'Maria','3','2024-09-22','88','646464',2,NULL),(10,'Junin','866','2024-09-23','123','000',4,'assets/imagemPicaPau.jpg'),(11,'JÃ£o','660','2024-09-16','123','55',6,'assets/imagemPicaPau.jpg'),(12,'Junin','366','2024-09-23','123','11',5,'assets/imagemPicaPau.jpg'),(13,'iji','479','2024-09-03','jij','879',2,'assets/imagemPicaPau.jpg');
 /*!40000 ALTER TABLE `professores` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -90,4 +89,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-05 17:25:51
+-- Dump completed on 2024-09-12 17:37:13

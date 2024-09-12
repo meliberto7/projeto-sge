@@ -1,20 +1,28 @@
 
 package controller;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.sql.Date;
-import java.time.LocalDateTime;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
 import model.bean.Professores;
 import model.dao.AreasDAO;
 import model.dao.ProfessoresDAO;
 
 
 @WebServlet(name = "ControllerLogin", urlPatterns = {"/ControllerLogin", "/login", "/cadastro", "/logar", "/cadastrar", "/inicio"})
+@MultipartConfig
 public class ControllerLogin extends HttpServlet {
 
     private ProfessoresDAO profDAO = new ProfessoresDAO();
@@ -50,6 +58,18 @@ public class ControllerLogin extends HttpServlet {
                 
             case "/inicio":
                 
+                Cookie[] cookies = request.getCookies();
+                
+                for(Cookie c: cookies){
+                    
+                    if (c.getName().equals("id_professor")) {
+                        
+                        request.setAttribute("id_professor", c.getValue());
+                        
+                    }
+                    
+                }
+                
                 request.getRequestDispatcher("WEB-INF/jsp/inicio.jsp").forward(request, response);
                 
                 break;
@@ -70,6 +90,35 @@ public class ControllerLogin extends HttpServlet {
             case "/cadastrar":
                 
                 Professores prof = new Professores();
+                
+                Part filePart = request.getPart("inputImagem");
+                String fileName = Paths.get(filePart.getSubmittedFileName()).getFileName().toString();
+                
+                if (fileName != null && !fileName.isEmpty()) {
+                    
+                    String basePath = getServletContext().getRealPath("/") + "assets";
+                    
+                    File uploads = new File(basePath);
+                    
+                    if (!uploads.exists()) {
+                        
+                        uploads.mkdir();
+                        
+                    }
+                    
+                    File file = new File(uploads, fileName);
+                    
+                    try(InputStream input = filePart.getInputStream()){
+                        
+                        Files.copy(input, file.toPath(), StandardCopyOption.REPLACE_EXISTING);
+                        
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    
+                    prof.setImagem("assets/" + fileName);
+                    
+                }
                 
                 prof.setNome(request.getParameter("inputNome"));
                 prof.setSenha(request.getParameter("inputSenha"));
@@ -97,21 +146,26 @@ public class ControllerLogin extends HttpServlet {
                 String senha = request.getParameter("inputSenha");
                 String pag = null;
                 
-                if (profDAO.logar(cpf, senha)) {
+                Professores profe = new Professores();
+                
+                profe = profDAO.logar(cpf, senha);
+                
+                if (profe.getId_professor() == 0) {
                     
-                    pag = "inicio";
+                    pag = "cadastro";
                     
                 } else {
                     
-                    pag = "login";
+                    Cookie cookie = new Cookie("id_professor", Integer.toString(profe.getId_professor()));
+                    response.addCookie(cookie);
+                    pag = "inicio";
                     
-                } 
+                }
                 
                 response.sendRedirect("./" + pag);
                 
                 break;
                 
-            
         }
         
     }

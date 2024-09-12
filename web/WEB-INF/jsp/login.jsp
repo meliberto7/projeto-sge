@@ -11,7 +11,7 @@
         <h1>Fazer Login</h1>
         <br>
         <form action="./logar" method="post">
-            <input type="number" name="inputCpf" placeholder="Cpf">
+            <input type="number" min="0" name="inputCpf" placeholder="Cpf">
             <input type="password" name="inputSenha" placeholder="Senha">
             <button type="submit">Entrar</button>
         </form>
