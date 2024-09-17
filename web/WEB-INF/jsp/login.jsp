@@ -1,4 +1,5 @@
 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 
 <html>
@@ -8,6 +9,12 @@
         <title>Login</title>
     </head>
     <body>
+
+    <c:if test="${very == true}">
+        <h2 class="alert">Faça o Login!</h2>
+    </c:if>
+
+        <br>
         <h1>Fazer Login</h1>
         <br>
         <form action="./logar" method="post">

@@ -9,7 +9,21 @@ public class Professores {
     private int id_professor, id_area;
     private String nome, matricula, senha, cpf, imagem;
     private Date admissao;
+    
+    public Professores() {
+    }
 
+    public Professores(int id_professor, int id_area, String nome, String matricula, String senha, String cpf, String imagem, Date admissao) {
+        this.id_professor = id_professor;
+        this.id_area = id_area;
+        this.nome = nome;
+        this.matricula = matricula;
+        this.senha = senha;
+        this.cpf = cpf;
+        this.imagem = imagem;
+        this.admissao = admissao;
+    }
+  
     public String getImagem() {
         return imagem;
     }

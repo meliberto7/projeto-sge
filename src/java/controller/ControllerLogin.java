@@ -21,12 +21,13 @@ import model.dao.AreasDAO;
 import model.dao.ProfessoresDAO;
 
 
-@WebServlet(name = "ControllerLogin", urlPatterns = {"/ControllerLogin", "/login", "/cadastro", "/logar", "/cadastrar", "/inicio"})
+@WebServlet(name = "ControllerLogin", urlPatterns = {"/ControllerLogin", "/login", "/cadastro", "/logar", "/cadastrar", "/inicio", "/logout"})
 @MultipartConfig
 public class ControllerLogin extends HttpServlet {
 
     private ProfessoresDAO profDAO = new ProfessoresDAO();
     private AreasDAO areaDAO = new AreasDAO();
+    private int id_usuario = 0;
 
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -60,29 +61,34 @@ public class ControllerLogin extends HttpServlet {
                 
                 Cookie[] cookies = request.getCookies();
                 
-                for(Cookie c: cookies){
+                for(Cookie c: cookies) {
+                    
+                    if (c.getName().equals("id_usuario")) {
+                     
+                        id_usuario = Integer.parseInt(c.getValue());
+                        
+                    }
+                    
+                }
+                
+                if (id_usuario > 0) {
+                    
+                    Cookie[] cookies2 = request.getCookies();
+                
+                for(Cookie c: cookies2){
                   
                     request.setAttribute(c.getName(), c.getValue());
-                    
-//                    switch(c.getName()) {
-//                        
-//                        case "id_professor":
-//                            
-//                            request.setAttribute("id_professor", c.getValue());
-//                            
-//                            break;
-//                            
-//                        case "nome":
-//                            
-//                            request.setAttribute("nome", c.getValue());
-//                            
-//                            break;
-//                        
-//                    }
                     
                 }
                 
                 request.getRequestDispatcher("WEB-INF/jsp/inicio.jsp").forward(request, response);
+                    
+                } else {
+                    
+                    request.setAttribute("very", true);
+                    request.getRequestDispatcher("WEB-INF/jsp/login.jsp").forward(request, response);
+                    
+                }
                 
                 break;
             
@@ -164,19 +170,42 @@ public class ControllerLogin extends HttpServlet {
                 
                 if (profe.getId_professor() == 0) {
                     
-                    pag = "cadastro";
+                    pag = "login";
                     
                 } else {
                     
+                    id_usuario = profe.getId_professor();
+                    
                     Cookie cookie = new Cookie("id_professor", Integer.toString(profe.getId_professor()));
                     Cookie cookie2 = new Cookie("nome", profe.getNome());
+                    Cookie cookie3 = new Cookie("imagem", profe.getImagem());
+                    
                     response.addCookie(cookie);
                     response.addCookie(cookie2);
+                    response.addCookie(cookie3);
                     pag = "inicio";
                     
                 }
                 
                 response.sendRedirect("./" + pag);
+                
+                break;
+                
+            case "/logout":
+                
+                Cookie[] cookies = request.getCookies();
+                
+                id_usuario = 0;
+                
+                for(Cookie c: cookies){
+                  
+                    c.setMaxAge(0);
+                    c.setValue("");
+                    response.addCookie(c);
+                    
+                }
+                
+                response.sendRedirect("./login");
                 
                 break;
                 
