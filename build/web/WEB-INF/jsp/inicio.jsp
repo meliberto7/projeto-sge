@@ -10,5 +10,6 @@
     <body>
         <h1>Bem vindo</h1>
         <p>ID: ${id_professor}</p>
+        <p>NOME: ${nome}</p>
     </body>
 </html>

@@ -1,3 +1,5 @@
+CREATE DATABASE  IF NOT EXISTS `projeto_sge` /*!40100 DEFAULT CHARACTER SET utf8mb4 */;
+USE `projeto_sge`;
 -- MySQL dump 10.13  Distrib 5.6.23, for Win64 (x86_64)
 --
 -- Host: localhost    Database: projeto_sge
@@ -16,60 +18,60 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `areas`
+-- Table structure for table `area`
 --
 
-DROP TABLE IF EXISTS `areas`;
+DROP TABLE IF EXISTS `area`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `areas` (
-  `id_area` int(11) NOT NULL AUTO_INCREMENT,
+CREATE TABLE `area` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nome` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id_area`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4;
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `areas`
+-- Dumping data for table `area`
 --
 
-LOCK TABLES `areas` WRITE;
-/*!40000 ALTER TABLE `areas` DISABLE KEYS */;
-INSERT INTO `areas` VALUES (2,'Matematica'),(3,'Geografia'),(4,'História'),(5,'Química'),(6,'Física');
-/*!40000 ALTER TABLE `areas` ENABLE KEYS */;
+LOCK TABLES `area` WRITE;
+/*!40000 ALTER TABLE `area` DISABLE KEYS */;
+INSERT INTO `area` VALUES (1,'vini');
+/*!40000 ALTER TABLE `area` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `professores`
+-- Table structure for table `professor`
 --
 
-DROP TABLE IF EXISTS `professores`;
+DROP TABLE IF EXISTS `professor`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `professores` (
+CREATE TABLE `professor` (
   `id_professor` int(11) NOT NULL AUTO_INCREMENT,
-  `nome` varchar(150) NOT NULL,
+  `nome` varchar(100) NOT NULL,
   `matricula` varchar(10) NOT NULL,
   `admissao` date NOT NULL,
   `senha` varchar(45) NOT NULL,
   `cpf` varchar(11) NOT NULL,
-  `id_area` int(11) NOT NULL,
-  `imagem` varchar(255) DEFAULT NULL,
+  `area_id` int(11) NOT NULL,
+  `imagens` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id_professor`),
-  UNIQUE KEY `cpf` (`cpf`),
-  KEY `id_area` (`id_area`),
-  CONSTRAINT `professores_ibfk_1` FOREIGN KEY (`id_area`) REFERENCES `areas` (`id_area`)
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4;
+  UNIQUE KEY `cpf_UNIQUE` (`cpf`),
+  KEY `area_id_idx` (`area_id`),
+  CONSTRAINT `area_id` FOREIGN KEY (`area_id`) REFERENCES `area` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `professores`
+-- Dumping data for table `professor`
 --
 
-LOCK TABLES `professores` WRITE;
-/*!40000 ALTER TABLE `professores` DISABLE KEYS */;
-INSERT INTO `professores` VALUES (3,'Vini','5','2024-09-10','123','00000000000',4,NULL),(4,'LÃ©o','2','2024-09-24','122','11111111111',5,NULL),(5,'Junin','0','2024-09-16','000','908989',5,NULL),(6,'Izaque','1','2024-09-09','000','9090090',6,NULL),(7,'Juninho2','4','2024-10-06','66','9797979',5,NULL),(8,'Maria','3','2024-09-22','88','646464',2,NULL),(10,'Junin','866','2024-09-23','123','000',4,'assets/imagemPicaPau.jpg'),(11,'JÃ£o','660','2024-09-16','123','55',6,'assets/imagemPicaPau.jpg'),(12,'Junin','366','2024-09-23','123','11',5,'assets/imagemPicaPau.jpg'),(13,'iji','479','2024-09-03','jij','879',2,'assets/imagemPicaPau.jpg');
-/*!40000 ALTER TABLE `professores` ENABLE KEYS */;
+LOCK TABLES `professor` WRITE;
+/*!40000 ALTER TABLE `professor` DISABLE KEYS */;
+INSERT INTO `professor` VALUES (9,'vini','sla','2024-08-05','1','12345678910',1,NULL),(10,'a','a','2024-03-01','1','12345678900',1,NULL),(14,'b','b','2024-03-01','123','1',1,'assets/Captura de tela 2024-09-12 152246.png');
+/*!40000 ALTER TABLE `professor` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -89,4 +91,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-09-12 17:37:13
+-- Dump completed on 2024-09-12 17:42:53

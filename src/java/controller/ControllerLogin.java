@@ -61,12 +61,24 @@ public class ControllerLogin extends HttpServlet {
                 Cookie[] cookies = request.getCookies();
                 
                 for(Cookie c: cookies){
+                  
+                    request.setAttribute(c.getName(), c.getValue());
                     
-                    if (c.getName().equals("id_professor")) {
-                        
-                        request.setAttribute("id_professor", c.getValue());
-                        
-                    }
+//                    switch(c.getName()) {
+//                        
+//                        case "id_professor":
+//                            
+//                            request.setAttribute("id_professor", c.getValue());
+//                            
+//                            break;
+//                            
+//                        case "nome":
+//                            
+//                            request.setAttribute("nome", c.getValue());
+//                            
+//                            break;
+//                        
+//                    }
                     
                 }
                 
@@ -157,7 +169,9 @@ public class ControllerLogin extends HttpServlet {
                 } else {
                     
                     Cookie cookie = new Cookie("id_professor", Integer.toString(profe.getId_professor()));
+                    Cookie cookie2 = new Cookie("nome", profe.getNome());
                     response.addCookie(cookie);
+                    response.addCookie(cookie2);
                     pag = "inicio";
                     
                 }
